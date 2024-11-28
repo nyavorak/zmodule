@@ -1,0 +1,33 @@
+#name:GRB_586
+#type:lc
+#RA_J2000:0
+#DEC_J2000:0
+#MW_corrected:1
+#time_unit:s 
+#z:0.23
+#Av_host:0.82
+time_since_burst band flux flux_err Texp zp flux_unit detection telescope
+300.00 gri 10.5760 0.0400 45.00 - AB 1 colibri
+300.00 zy 9.8721 0.0400 45.00 - AB 1 colibri
+350.00 r 10.7213 0.0400 45.00 - AB 1 colibri
+350.00 zy 10.0621 0.0400 45.00 - AB 1 colibri
+400.00 i 10.5217 0.0400 45.00 - AB 1 colibri
+400.00 zy 10.2280 0.0400 45.00 - AB 1 colibri
+450.00 g 11.5501 0.0400 45.00 - AB 1 colibri
+450.00 zy 10.3753 0.0400 45.00 - AB 1 colibri
+500.00 r 11.1668 0.0400 45.00 - AB 1 colibri
+500.00 zy 10.5076 0.0400 45.00 - AB 1 colibri
+550.00 i 10.9215 0.0400 45.00 - AB 1 colibri
+550.00 zy 10.6279 0.0400 45.00 - AB 1 colibri
+600.00 g 11.9128 0.0400 45.00 - AB 1 colibri
+600.00 zy 10.7380 0.0400 45.00 - AB 1 colibri
+650.00 r 11.4988 0.0400 45.00 - AB 1 colibri
+650.00 zy 10.8396 0.0400 45.00 - AB 1 colibri
+700.00 i 11.2275 0.0400 45.00 - AB 1 colibri
+700.00 zy 10.9339 0.0400 45.00 - AB 1 colibri
+750.00 g 12.1967 0.0400 45.00 - AB 1 colibri
+750.00 zy 11.0219 0.0400 45.00 - AB 1 colibri
+800.00 r 11.7635 0.0400 45.00 - AB 1 colibri
+800.00 zy 11.1043 0.0400 45.00 - AB 1 colibri
+850.00 i 11.4755 0.0400 45.00 - AB 1 colibri
+850.00 zy 11.1819 0.0400 45.00 - AB 1 colibri

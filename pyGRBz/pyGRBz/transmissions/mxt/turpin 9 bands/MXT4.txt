@@ -1,0 +1,6 @@
+# MXT
+# wavelength(nm)    transmittance
+0.14966 0
+0.14981 100
+0.22089 100
+0.22111 0

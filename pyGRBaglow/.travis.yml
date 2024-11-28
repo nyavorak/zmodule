@@ -1,0 +1,36 @@
+---
+# Config file for automatic testing at travis-ci.org
+
+language: minimal
+
+env:
+# - PYTHON_VERSION=2.7
+  - PYTHON_VERSION=3.6
+  - PYTHON_VERSION=3.7
+  - PYTHON_VERSION=3.8
+
+os:
+  - osx
+  - linux
+  - windows
+
+# bail-out early for failures
+fast_finish: true
+
+before_install:
+  - source ./ci/conda4travis_before.sh
+
+install:
+  - set -ex;
+  # install miniconda, create env, and activate
+  - source ./ci/conda4travis.sh
+  # install this package
+  - python setup.py develop
+
+# run tests
+script: 
+  - pytest --cov-report=xml --cov=pyGRBaglow tests/
+
+# perform coverage
+after_success:
+  - codecov

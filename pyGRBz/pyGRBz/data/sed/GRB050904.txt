@@ -1,0 +1,31 @@
+##Taken from http://arxiv.org/pdf/astro-ph/0509766v2.pdf figure 3
+#name:GRB050904
+#type:sed
+#RA_J2000:0h54m50.6s
+#DEC_J2000:+14d05m04.5s
+#MW_corrected: yes
+#time_since_burst: 1.155
+#time_unit: d
+#z:6.29
+#zph:6.3
+#zph_sup:0.1
+#zph_inf:0.1
+#Av_host:-99
+#Av_host_sup:-99
+#Av_host_inf:-99 
+#ext_type:inconnu
+#beta:1.2
+#beta_sup:0.3
+#beta_inf:0.3
+#beta_X:-99
+#beta_X_sup:-99
+#beta_X_inf:-99
+band flux flux_err zp flux_unit detection telescope
+Ks 19.26 0.07 - AB 1 isaac
+H 19.74 0.07 - AB 1 isaac
+J 20.14 0.06 - AB 1 isaac
+z 21.03 0.22 - AB 1 fors2
+I 22.27 0.22 - AB 1 cafos
+I 24.20 0.2 - AB 1 fors2
+R 24.29 0.05 - AB 0 cafos
+V 24.23 0.05 - AB 0 laica

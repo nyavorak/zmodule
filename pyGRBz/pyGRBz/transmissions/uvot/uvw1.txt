@@ -1,0 +1,7 @@
+# UVOT_uvw1
+# nanometer
+# UVOT/uvw1 SWIFT telescope from svo2 website       
+225.34 0.0
+225.35 0.98
+294.65 0.98
+294.66 0.0
