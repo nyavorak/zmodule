@@ -16,10 +16,10 @@ from pyGRBz.estimation import stats
 path = os.getcwd()
 grb_name = input("GRB name: ").replace(" ", "").upper() #format GRB050904
 #grb_name = "GRB_23" #just a test
-mode = input("MutlipleTargets, SED or LC? ").lower() # Can estimate photo_z for: "MutlipleTargets, SED, LC"
+mode = input("MultipleTargets, SED or LC? ").lower() # Can estimate photo_z for: "MutlipleTargets, SED, LC"
 
 # input data and output
-if (mode=="mutlitpletargets") or (mode=="sed"):
+if (mode=="multipletargets") or (mode=="sed"):
     input_dir='/data/sed/'
 elif mode=="lc":
     input_dir='/data/lc/'
