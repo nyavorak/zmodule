@@ -15,11 +15,11 @@ from pyGRBz.estimation import stats
 
 path = os.getcwd()
 grb_name = input("GRB name: ").replace(" ", "").upper() #format GRB050904
-#grb_name = "GRB_23" #just a test
-mode = input("MultipleTargets, SED or LC? ").lower() # Can estimate photo_z for: "MutlipleTargets, SED, LC"
+#grb_name = ["GRB_23"]
+mode = input("SED or LC? ").lower() # Can estimate photo_z for: "MutlipleTargets, SED, LC"
 
 # input data and output
-if (mode=="multipletargets") or (mode=="sed"):
+if mode=="sed":
     input_dir='/data/sed/'
 elif mode=="lc":
     input_dir='/data/lc/'
@@ -41,7 +41,7 @@ photoz = GRB_photoZ(
 # Load as many targets as you want. It can be a mix of SEDs and light curves
 photoz.load_data(
     data_dir=input_dir,           
-    data_name=[grb_name]
+    data_name=grb_name
 )
 
 ###############################################################################################################
