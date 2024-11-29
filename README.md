@@ -14,4 +14,4 @@ Photometric redshift estimation with COLIBRI filter bands (but work for many oth
     * At a given time (method='fixed',time_SED = ...) or time at which the flux is maximum in the reddest band (method='ReddestBand')
 - MCMC sampling with the extinction laws: 'smc', 'lmc', 'mw', 'nodust'
 - Comparison of all the fits statistically in term of $\chi^2$ and BIC (default threshold is 2)
-* Also working Jupyter notebooks in `pyGRBz/pyGRBz/notebooks`
+- Also there are notebooks in `pyGRBz/pyGRBz/notebooks`
