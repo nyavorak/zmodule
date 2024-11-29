@@ -1,5 +1,5 @@
 # zmodule
-photoz estimation <br />
+photo-$z$ estimation <br />
 - Use of pyGRBz (https://pygrbz.readthedocs.io/en/latest/) and pyGRBaglow (https://pygrbaglow.readthedocs.io/en/latest/)
 - Tested and works on Linux, bugs on Mac M2
 # Installation
