@@ -4,7 +4,7 @@ photoz estimation <br />
 - Tested and works on Linux, bugs on Mac M2
 # Installation
 - Just run
-  '''
+  '''python
   python setup.py
   '''
   from the directory
