@@ -16,4 +16,4 @@ Inside the zmodule folder:
     * At a given time (method='fixed',time_SED = ...) or time at which the flux is maximum in the reddest band (method='ReddestBand')
 - MCMC sampling with the extinction laws: 'smc', 'lmc', 'mw', 'nodust', 'sne'
 - Comparison of all the fits statistically in term of $\chi^2$ and $\Delta$ BIC (default threshold is 2)
-- Or use notebooks in `pyGRBz/pyGRBz/notebooks`
+- Better use notebooks in `pyGRBz/pyGRBz/notebooks` to photo-z a list of objects
