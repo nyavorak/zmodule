@@ -9,11 +9,11 @@ Inside the zmodule folder:
 # How does it work ?
 - Open and modify the `photoz.py` file as you want
 - Input name of the GRB or list of GRBs, i.e. correct format is GRBXXXXXX
-- Is your input Multitargets, light curve or SED ?
+- Is your input Multitargets, a light curve or an SED ?
 - Conversion of magnitudes to flux and automatic correction from Galactic extinction if necessary
 - Extraction of the SED:
     * Model of the SED is either with a single power law (model = "SPL") or a broken power law (model = "BPL")
     * At a given time (method='fixed',time_SED = ...) or time at which the flux is maximum in the reddest band (method='ReddestBand')
-- MCMC sampling with the extinction laws: 'smc', 'lmc', 'mw', 'nodust', 'sne'
+- MCMC sampling with the extinction laws. Accepted laws are ['smc', 'lmc', 'mw', 'nodust', 'sne']
 - Comparison of all the fits statistically in term of $\chi^2$ and $\Delta$ BIC (default threshold is 2)
 - Better use notebooks in `pyGRBz/pyGRBz/notebooks` to photo-z a list of objects
