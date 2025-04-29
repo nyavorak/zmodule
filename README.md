@@ -3,7 +3,8 @@ Photometric redshift estimation with COLIBRI filter bands (but work for many oth
 - Use of pyGRBz (https://pygrbz.readthedocs.io/en/latest/) and pyGRBaglow (https://pygrbaglow.readthedocs.io/en/latest/)
 - Tested and works on Ubuntu, Fedora
 # Installation
-Inside the zmodule folder:
+- Create a python environment for the module `conda create -n yourenv`
+- Clone and go inside the source folder
 - Install the requirements with `pip install -r requirements.txt`
 - Just run `python setup.py` after checking the part bellow 
 # How does it work ?
