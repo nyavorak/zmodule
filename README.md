@@ -3,7 +3,9 @@ Photometric redshift estimation with COLIBRI filter bands (but work for many oth
 - Use of pyGRBz (https://pygrbz.readthedocs.io/en/latest/) and pyGRBaglow (https://pygrbaglow.readthedocs.io/en/latest/)
 - Tested and works on Ubuntu, Fedora
 # Installation
-- Just run `python setup.py` from the directory
+Inside the zmodule folder:
+- Install the requirements with `pip install -r requirements.txt`
+- Just run `python setup.py`
 # How does it work ?
 - Just run `python photoz.py` from the directory
 - Input name of the GRB or list of GRBs, i.e. correct format is GRBXXXXXX
