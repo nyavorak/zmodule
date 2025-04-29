@@ -12,10 +12,13 @@ import imp
 import sys
 from pyGRBz.pyGRBz import GRB_photoZ
 from pyGRBz.estimation import stats
-
+_, pathgrbz, _ = imp.find_module("pyGRBz")
 path = os.getcwd()
+
 grb_name = input("GRB name: ").replace(" ", "").upper() #format GRB050904
-#grb_name = ["GRB_23"]
+grb_name = [grb_name]
+
+#grb_name = ["GRB050904"]
 mode = input("SED or LC? ").lower() # Can estimate photo_z for: "MutlipleTargets, SED, LC"
 
 # input data and output
@@ -26,6 +29,7 @@ elif mode=="lc":
 else:
     sys.exit("Wrong input")
 
+#output_dir=path+'/results/%s/'%mode
 output_dir='/results/%s/'%mode
 
 
@@ -76,7 +80,7 @@ priors=dict(z=[0,11],Av=[0,10],beta=[0,3],norm=[0,10])#NHX if with X-data
 # Select to add dust, gas in host and our Galaxy
 # Select IGM transmission method: 'Madau99' or 'Meiksin06'
 # adapt_z: If adapt_z is True try to reduce parameter space for the redshift based on non detection in blue bands
-laws = ['smc', 'lmc', 'mw', 'nodust']
+laws = ['smc', 'lmc', 'mw', 'nodust','sne']
 for law in laws:
     photoz.fit(
         ext_law=law,
@@ -93,11 +97,16 @@ for law in laws:
         igm_att='Meiksin',
         clean_data=False,
         priors=priors,
-        adapt_z=True
-        )
+        adapt_z=True)
 
-
+#output_dir=path+'/results/%s/'%mode
+output_dir='/results/%s/'%mode
 ###############################################################################################################    
 #Compare all fits statistically, in term of chi-square and BIC
-mypath = "/home/nrakotondrainibe/"
-stats(mypath+output_dir+grb_name+"/",ext_laws=laws,lim_bic=2)
+user_input = input("Do you want to statistically compare the results of your different fits? (yes/no)").replace(" ", "").lower()
+if user_input.lower() in ["yes", "y"]:
+	stats(path+output_dir+grb_name[0]+"/",ext_laws=laws,lim_bic=2)	
+elif (user_input.lower() in ["no", "n"]) or len(laws)<2:
+    print("You have only one model anyway...")
+else:
+    print("Invalid input but you have only one model anyway...")
