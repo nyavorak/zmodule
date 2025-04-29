@@ -1,4 +1,4 @@
-def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust'],lim_bic = 2):
+def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
     """Compare detection if Multiple targets
        Best fit in chi-square
        Best fit in BIC within the threshold
