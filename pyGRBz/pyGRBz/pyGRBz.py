@@ -11,7 +11,6 @@ from pyGRBz.fitting import mcmc
 from pyGRBz.plotting import plot_zphot
 import imp
 import warnings
-
 warnings.filterwarnings("ignore")
 
 
@@ -27,6 +26,7 @@ class GRB_photoZ:
         wvl_step_X=10,
         thres_err=0.02,
         plot=True,
+#        output_dir=path+"/results/",
         output_dir="/results/",
     ):
         """
@@ -35,7 +35,6 @@ class GRB_photoZ:
         """
 
         try:
-            #_, path, _ = imp.find_module("pyGRBz")
             _, pathgrbz, _ = imp.find_module("pyGRBz")
             path = os.getcwd()
         except:
