@@ -6,7 +6,8 @@ Photometric redshift estimation with COLIBRI filter bands (but work for many oth
 - Create a python environment for the module `conda create -n yourenv`
 - Clone and go inside the source folder
 - Install the requirements with `pip install -r requirements.txt`
-- Just run `python setup.py` after checking the part bellow 
+- Just run `python setup.py` after checking the part bellow
+- To run a notebook, install your conda ipykernel with `python -m ipykernel install --user --name yourenv --display-name "yourenv"`
 # How does it work ?
 - Open and modify the `photoz.py` file as you want
 - Input name of the GRB or list of GRBs, i.e. correct format is GRBXXXXXX
