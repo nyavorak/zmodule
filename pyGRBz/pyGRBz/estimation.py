@@ -87,9 +87,9 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
                 Av_nodust = np.nan
             if 'sne' in ext_laws:
                 mask_sne = fit_results_sne['name'] == GRB
-                sum_proba_sne = fit_results_sne['sum_proba'][mask_sne]
-                bic_sne = fit_results_sne['bic'][mask_sne]
-                Av_sne = fit_results_sne['best_Av'][mask_sne]
+                sum_proba_sne = float(fit_results_sne['sum_proba'][mask_sne])
+                bic_sne = float(fit_results_sne['bic'][mask_sne])
+                Av_sne = float(fit_results_sne['best_Av'][mask_sne])
             else:
                 mask_sne = []
                 sum_proba_sne = np.nan
@@ -179,39 +179,39 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
                 
                 #### list_bic = [bic_smc, bic_mw, bic_lmc, bic_nodust]
                 if count_bic == 0 and count_bic != "no_dust_condition":
-                    min_bic_1 = np.nanmin(list_bic)
-                    min_bic_idx_1 = list_bic.index(min_bic_1)
-                    list_bic_reduced = list_bic[:min_bic_idx_1] + list_bic[min_bic_idx_1+1:]
-                    min_bic_2 = np.nanmin(list_bic_reduced)
-                    min_bic_idx_2 = list_bic.index(min_bic_2)
-                    if ('smc' in ext_laws) and min_bic_idx_1 == 0:
+                    np.nanmin_bic_1 = np.nanmin(list_bic)
+                    np.nanmin_bic_idx_1 = list_bic.index(np.nanmin_bic_1)
+                    list_bic_reduced = list_bic[:np.nanmin_bic_idx_1] + list_bic[np.nanmin_bic_idx_1+1:]
+                    np.nanmin_bic_2 = np.nanmin(list_bic_reduced)
+                    np.nanmin_bic_idx_2 = list_bic.index(np.nanmin_bic_2)
+                    if ('smc' in ext_laws) and np.nanmin_bic_idx_1 == 0:
                         new_table_conflict.append(fit_results_smc[mask_smc])
                         choice_GRB_conflict_1 = 'smc'
-                    elif ('mw' in ext_laws) and min_bic_idx_1 == 1:
+                    elif ('mw' in ext_laws) and np.nanmin_bic_idx_1 == 1:
                         new_table_conflict.append(fit_results_mw[mask_mw])
                         choice_GRB_conflict_1 = 'mw'
-                    elif ('sne' in ext_laws) and min_bic_idx_1 == 1:
+                    elif ('sne' in ext_laws) and np.nanmin_bic_idx_1 == 1:
                         new_table_conflict.append(fit_results_sne[mask_sne])
                         choice_GRB_conflict_1 = 'sne'
-                    elif ('lmc' in ext_laws) and min_bic_idx_1 == 2:
+                    elif ('lmc' in ext_laws) and np.nanmin_bic_idx_1 == 2:
                         new_table_conflict.append(fit_results_lmc[mask_lmc])
                         choice_GRB_conflict_1 = 'lmc'
-                    elif ('nodust' in ext_laws) and min_bic_idx_1 == 3:
+                    elif ('nodust' in ext_laws) and np.nanmin_bic_idx_1 == 3:
                         new_table_conflict.append(fit_results_nodust[mask_nodust])
                         choice_GRB_conflict_1 = 'nodust'
-                    if ('smc' in ext_laws) and min_bic_idx_2 == 0:
+                    if ('smc' in ext_laws) and np.nanmin_bic_idx_2 == 0:
                         new_table_conflict.append(fit_results_smc[mask_smc])
                         choice_GRB_conflict_2 = 'smc'
-                    elif ('mw' in ext_laws) and min_bic_idx_2 == 1:
+                    elif ('mw' in ext_laws) and np.nanmin_bic_idx_2 == 1:
                         new_table_conflict.append(fit_results_mw[mask_mw])
                         choice_GRB_conflict_2 = 'mw'
-                    elif ('sne' in ext_laws) and min_bic_idx_2 == 1:
+                    elif ('sne' in ext_laws) and np.nanmin_bic_idx_2 == 1:
                         new_table_conflict.append(fit_results_sne[mask_sne])
                         choice_GRB_conflict_2 = 'sne'
-                    elif ('lmc' in ext_laws) and min_bic_idx_2 == 2:
+                    elif ('lmc' in ext_laws) and np.nanmin_bic_idx_2 == 2:
                         new_table_conflict.append(fit_results_lmc[mask_lmc])
                         choice_GRB_conflict_2 = 'lmc'
-                    elif ('nodust' in ext_laws) and min_bic_idx_2 == 3:
+                    elif ('nodust' in ext_laws) and np.nanmin_bic_idx_2 == 3:
                         new_table_conflict.append(fit_results_nodust[mask_nodust])
                         choice_GRB_conflict_2 = 'nodust'
                         
