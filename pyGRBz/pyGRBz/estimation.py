@@ -219,7 +219,7 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
                 nb_GRB_agreed += 1
     new_table=vstack(new_table)
     new_table.write(path_dir+'best_fits_combined.dat',format='ascii', overwrite=True)
-    print("Best fit is given using the ",list(new_table['ext_law'][new_table['name']==list(set(GRB_list))])," extinction law")
+    print("Best fit is with the ",list(new_table['ext_law'][new_table['name']==list(set(GRB_list))])," extinction law")
     
     if new_table_bic != []:
         new_table_bic=vstack(new_table_bic)
