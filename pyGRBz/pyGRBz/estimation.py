@@ -8,6 +8,10 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
     from astropy.io import ascii
     from astropy.table import Table, vstack
     import pandas as pd
+    fit_results_smc = None
+    fit_results_lmc = None
+    fit_results_nodust = None
+    fit_results_sne = None
     for ext in ext_laws:
         if ext == 'smc':
             fit_results_smc=ascii.read(path_dir+'best_fits_%s.dat' % ext)
@@ -17,8 +21,18 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
             fit_results_lmc=ascii.read(path_dir+'best_fits_%s.dat' % ext)
         elif ext == 'nodust':
             fit_results_nodust=ascii.read(path_dir+'best_fits_%s.dat' % ext)
-            
-    GRB_list = fit_results_smc['name']
+        elif ext == 'sne':
+            fit_results_sne=ascii.read(path_dir+'best_fits_%s.dat' % ext)
+
+    GRB_list = None
+    if fit_results_smc is not None:
+        GRB_list = fit_results_smc['name']
+    elif fit_results_lmc is not None:
+        GRB_list = fit_results_lmc['name']
+    elif fit_results_nodust is not None:
+        GRB_list = fit_results_nodust['name']
+    elif fit_results_sne is not None:
+        GRB_list = fit_results_sne['name']
     
     if False:
         print ('Not same number of detected GRBs')
@@ -71,29 +85,45 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
                 sum_proba_nodust =np.nan
                 bic_nodust = 1e10
                 Av_nodust = np.nan
+            if 'sne' in ext_laws:
+                mask_sne = fit_results_sne['name'] == GRB
+                sum_proba_sne = fit_results_sne['sum_proba'][mask_sne]
+                bic_sne = fit_results_sne['bic'][mask_sne]
+                Av_sne = fit_results_sne['best_Av'][mask_sne]
+            else:
+                mask_sne = []
+                sum_proba_sne = np.nan
+                bic_sne = 1e10
+                Av_sne = np.nan                
             
             z_GRB_chi2 = 0
     
-            if ('smc' in ext_laws) and (np.nanmax([sum_proba_smc,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_smc) :
+            if ('smc' in ext_laws) and (np.nanmax([sum_proba_smc,sum_proba_sne,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_smc) :
                 #print (GRB,'smc')
                 choice_GRB_chi2 = 'smc'
                 new_table.append(fit_results_smc[mask_smc])
                 z_GRB_chi2 = fit_results_smc[mask_smc]['z_sim']
-            elif ('mw' in ext_laws) and  (np.nanmax([sum_proba_smc,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_mw) :
+            elif ('mw' in ext_laws) and  (np.nanmax([sum_proba_smc,sum_proba_sne,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_mw) :
                 #print (GRB,'mw')
                 choice_GRB_chi2 = 'mw'
                 new_table.append(fit_results_mw[mask_mw])
                 z_GRB_chi2 = fit_results_mw[mask_mw]['z_sim']
-            elif ('lmc' in ext_laws) and  (np.nanmax([sum_proba_smc,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_lmc) :
+            elif ('lmc' in ext_laws) and  (np.nanmax([sum_proba_smc,sum_proba_sne,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_lmc) :
                 #print (GRB,'lmc')
                 choice_GRB_chi2 = 'lmc'
                 new_table.append(fit_results_lmc[mask_lmc])
                 z_GRB_chi2 = fit_results_lmc[mask_lmc]['z_sim']
-            elif ('nodust' in ext_laws) and  (np.nanmax([sum_proba_smc,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_nodust) :
+            elif ('nodust' in ext_laws) and  (np.nanmax([sum_proba_smc,sum_proba_sne,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_nodust) :
                 #print (GRB,'lmc')
                 choice_GRB_chi2 = 'nodust'
                 new_table.append(fit_results_nodust[mask_nodust])
                 z_GRB_chi2 = fit_results_nodust[mask_nodust]['z_sim']
+            elif ('sne' in ext_laws) and  (np.nanmax([sum_proba_smc,sum_proba_sne,sum_proba_lmc,sum_proba_mw,sum_proba_nodust]) == sum_proba_sne) :
+                #print (GRB,'lmc')
+                choice_GRB_chi2 = 'sne'
+                new_table.append(fit_results_sne[mask_sne])
+                z_GRB_chi2 = fit_results_sne[mask_sne]['z_sim']
+                
     
     ################# DELTABIC limit        
             
@@ -104,37 +134,43 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
             choice_GRB_bic = ''
             z_GRB = 0
     
-            if Av_mw == 0 and Av_smc == 0 and Av_lmc == 0 and Av_nodust == 0:
+            if Av_mw == 0 and Av_smc == 0 and Av_lmc == 0 and Av_sne == 0 and Av_nodust == 0:
                 new_table_bic.append(fit_results_nodust[mask_nodust])
                 count_bic = "no_dust_condition"
             else:
-                if ('smc' in ext_laws) and bic_lmc-bic_smc>lim_bic and bic_mw-bic_smc>lim_bic and bic_nodust-bic_smc>lim_bic :
+                if ('smc' in ext_laws) and bic_sne-bic_smc>lim_bic and bic_lmc-bic_smc>lim_bic and bic_mw-bic_smc>lim_bic and bic_nodust-bic_smc>lim_bic :
                     new_table_bic.append(fit_results_smc[mask_smc])
                     nb_GRB_bic_det += 1
                     choice_GRB_bic = 'smc'
-                    delta_bic_min = np.nanmin([bic_lmc-bic_smc,bic_mw-bic_smc, bic_nodust-bic_smc])
+                    delta_bic_min = np.nanmin([bic_lmc-bic_smc, bic_sne-bic_smc,bic_mw-bic_smc, bic_nodust-bic_smc])
                     count_bic = 3
                     z_GRB = fit_results_smc[mask_smc]['z_sim']
-                elif ('mw' in ext_laws) and bic_smc-bic_mw>lim_bic and bic_lmc-bic_mw>lim_bic and bic_nodust-bic_mw>lim_bic:
+                elif ('mw' in ext_laws) and bic_smc-bic_mw>lim_bic and bic_sne-bic_mw>lim_bic and bic_lmc-bic_mw>lim_bic and bic_nodust-bic_mw>lim_bic:
                     new_table_bic.append(fit_results_mw[mask_mw])
                     nb_GRB_bic_det += 1
                     choice_GRB_bic = 'mw'
-                    delta_bic_min = np.nanmin([bic_smc-bic_mw,bic_lmc-bic_mw, bic_nodust-bic_mw])
+                    delta_bic_min = np.nanmin([bic_smc-bic_mw,bic_sne-bic_mw,bic_lmc-bic_mw, bic_nodust-bic_mw])
                     count_bic = 3
                     z_GRB = fit_results_mw[mask_mw]['z_sim']
-    
-                elif ('lmc' in ext_laws) and bic_smc-bic_lmc>lim_bic and bic_mw-bic_lmc>lim_bic and bic_nodust-bic_lmc>lim_bic:
+                elif ('sne' in ext_laws) and bic_smc-bic_sne>lim_bic and bic_lmc-bic_sne>lim_bic and bic_nodust-bic_sne>lim_bic and bic_mw-bic_sne>lim_bic:
+                    new_table_bic.append(fit_results_sne[mask_sne])
+                    nb_GRB_bic_det += 1
+                    choice_GRB_bic = 'sne'
+                    delta_bic_min = np.nanmin([bic_smc-bic_sne, bic_lmc-bic_sne, bic_nodust-bic_sne,bic_mw-bic_sne])
+                    count_bic = 3
+                    z_GRB = fit_results_sne[mask_sne]['z_sim']
+                elif ('lmc' in ext_laws) and bic_sne-bic_lmc>lim_bic and bic_smc-bic_lmc>lim_bic and bic_mw-bic_lmc>lim_bic and bic_nodust-bic_lmc>lim_bic:
                     new_table_bic.append(fit_results_lmc[mask_lmc])
                     nb_GRB_bic_det += 1
                     choice_GRB_bic = 'lmc'
-                    delta_bic_min = np.nanmin([bic_smc-bic_lmc, bic_mw-bic_lmc, bic_nodust-bic_lmc])
+                    delta_bic_min = np.nanmin([bic_sne-bic_lmc,bic_smc-bic_lmc, bic_mw-bic_lmc, bic_nodust-bic_lmc])
                     count_bic = 3
                     z_GRB = fit_results_lmc[mask_lmc]['z_sim']
-                elif ('nodust' in ext_laws) and bic_smc-bic_nodust>lim_bic and bic_mw-bic_nodust>lim_bic and bic_lmc-bic_nodust>lim_bic:
+                elif ('nodust' in ext_laws) and bic_sne-bic_nodust and bic_smc-bic_nodust>lim_bic and bic_mw-bic_nodust>lim_bic and bic_lmc-bic_nodust>lim_bic:
                     new_table_bic.append(fit_results_nodust[mask_nodust])
                     nb_GRB_bic_det += 1
                     choice_GRB_bic = 'nodust'
-                    delta_bic_min = np.nanmin([bic_smc-bic_nodust, bic_mw-bic_nodust, bic_lmc-bic_nodust])
+                    delta_bic_min = np.nanmin([bic_smc-bic_nodust,bic_sne-bic_nodust, bic_mw-bic_nodust, bic_lmc-bic_nodust])
                     count_bic = 3
                     z_GRB = fit_results_nodust[mask_nodust]['z_sim']
                 
@@ -154,6 +190,9 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
                     elif ('mw' in ext_laws) and min_bic_idx_1 == 1:
                         new_table_conflict.append(fit_results_mw[mask_mw])
                         choice_GRB_conflict_1 = 'mw'
+                    elif ('sne' in ext_laws) and min_bic_idx_1 == 1:
+                        new_table_conflict.append(fit_results_sne[mask_sne])
+                        choice_GRB_conflict_1 = 'sne'
                     elif ('lmc' in ext_laws) and min_bic_idx_1 == 2:
                         new_table_conflict.append(fit_results_lmc[mask_lmc])
                         choice_GRB_conflict_1 = 'lmc'
@@ -166,13 +205,16 @@ def stats(path_dir,ext_laws=['smc', 'lmc', 'mw', 'nodust','sne'],lim_bic = 2):
                     elif ('mw' in ext_laws) and min_bic_idx_2 == 1:
                         new_table_conflict.append(fit_results_mw[mask_mw])
                         choice_GRB_conflict_2 = 'mw'
-    
+                    elif ('sne' in ext_laws) and min_bic_idx_2 == 1:
+                        new_table_conflict.append(fit_results_sne[mask_sne])
+                        choice_GRB_conflict_2 = 'sne'
                     elif ('lmc' in ext_laws) and min_bic_idx_2 == 2:
                         new_table_conflict.append(fit_results_lmc[mask_lmc])
                         choice_GRB_conflict_2 = 'lmc'
                     elif ('nodust' in ext_laws) and min_bic_idx_2 == 3:
                         new_table_conflict.append(fit_results_nodust[mask_nodust])
                         choice_GRB_conflict_2 = 'nodust'
+                        
             if choice_GRB_chi2 == choice_GRB_bic:
                 nb_GRB_agreed += 1
     new_table=vstack(new_table)
