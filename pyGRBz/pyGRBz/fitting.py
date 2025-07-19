@@ -20,6 +20,55 @@ try:
 except:
     from pyGRBz.fluxes import compute_model_integrated_flux
 
+def _init_pool_globals(
+    _flux_obs,
+    _fluxerr_obs,
+    _detection_flag,
+    _wavelength_g,
+    _F0,
+    _wvl0,
+    _sys_response,
+    _ext_law_g,
+    _Host_dust_g,
+    _Host_gas_g,
+    _MW_dust_g,
+    _MW_gas_g,
+    _DLA_g,
+    _igm_att_g,
+    _priors_g,
+):
+    global flux_obs
+    global fluxerr_obs
+    global detection_flag
+    global wavelength_g
+    global F0
+    global wvl0
+    global sys_response
+    global ext_law_g
+    global Host_dust_g
+    global Host_gas_g
+    global MW_dust_g
+    global MW_gas_g
+    global DLA_g
+    global igm_att_g
+    global priors_g
+
+    flux_obs = _flux_obs
+    fluxerr_obs = _fluxerr_obs
+    detection_flag = _detection_flag
+    wavelength_g = _wavelength_g
+    F0 = _F0
+    wvl0 = _wvl0
+    sys_response = _sys_response
+    ext_law_g = _ext_law_g
+    Host_dust_g = _Host_dust_g
+    Host_gas_g = _Host_gas_g
+    MW_dust_g = _MW_dust_g
+    MW_gas_g = _MW_gas_g
+    DLA_g = _DLA_g
+    igm_att_g = _igm_att_g
+    priors_g = _priors_g
+
 
 def residuals(params, kind="mag"):
     """Calculate the residuals, observations - models"""
@@ -415,7 +464,27 @@ def sampler_run(
 ):
     """Run the MCMC sampler"""
 
-    with Pool(Nthreads) as pool:
+    with Pool(
+        Nthreads,
+        initializer=_init_pool_globals,
+        initargs=(
+            flux_obs,
+            fluxerr_obs,
+            detection_flag,
+            wavelength_g,
+            F0,
+            wvl0,
+            sys_response,
+            ext_law_g,
+            Host_dust_g,
+            Host_gas_g,
+            MW_dust_g,
+            MW_gas_g,
+            DLA_g,
+            igm_att_g,
+            priors_g,
+        ),
+    ) as pool:
         sampler = emcee.EnsembleSampler(
             nwalkers,
             ndim,
