@@ -1,7 +1,7 @@
 # zmodule
 Photometric redshift estimation with COLIBRI filter bands (but work for many others, just update the transmissions)<br />
 - Use of pyGRBz (https://pygrbz.readthedocs.io/en/latest/) and pyGRBaglow (https://pygrbaglow.readthedocs.io/en/latest/)
-- Tested and works on Ubuntu, Fedora
+- Tested and works on Ubuntu, Fedora, MacOs
 # Installation
 - Create a python3.12 environment for the module `conda create -n yourenv python=3.12`
 - Clone and go inside the source folder
