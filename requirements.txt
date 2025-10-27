@@ -2,3 +2,16 @@ cython
 xmltodict
 pandas
 tqdm
+pip
+bumpversion
+cython
+wheel
+watchdog
+flake8
+codecov
+coverage
+Sphinx
+twine
+pytest
+pytest-runner
+pytest-cov
