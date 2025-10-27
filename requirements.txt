@@ -15,3 +15,6 @@ twine
 pytest
 pytest-runner
 pytest-cov
+tox
+xmltodict
+numpy
