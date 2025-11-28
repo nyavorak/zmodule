@@ -75,7 +75,7 @@ def sed_extinction(
     if ext_law != "nodust" and Host_dust:
         # Transmission due to host galaxy reddening
         if ext_law == "sne":
-            Trans_tot *= sne(wavelength, Av, z, Xcut=True)[1]
+            Trans_tot *= sne(wavelength, Av, z)[1]
         else:
             Trans_tot *= Pei92(wavelength, Av, z, ext_law=ext_law, Xcut=True)[1]
         # tt1 = time.time()

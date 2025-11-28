@@ -165,7 +165,7 @@ def sne1(wavelength, Av, z, Xcut=False):
     Trans_dust = 10**(-0.4 * Av * Alambda_over_Av)
     return [Alambda_over_Av, Trans_dust]
     
-def sne(wavelength, Av, z):
+def sne(wavelength, Av, z, Xcut=False):
     """
     Extinction law for SNe
 
@@ -207,8 +207,9 @@ def sne(wavelength, Av, z):
         + 2.591 / (wvl[~mask])
         - 6.5916e-01
     )
-    # Below 1000 Angstroms, physically incorrect but useful for the addition of X-ray data
-    Alambda_over_Av[Alambda_over_Av < 0] = 0
+    if Xcut:
+        w = np.where(wvl < 0.07)
+        Alambda_over_Av[w] = 0
 
     # Return optical depth due to dust reddening in funtion of wavelength
     Trans_dust = 10**(-0.4 * Av * Alambda_over_Av)

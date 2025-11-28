@@ -1,0 +1,45 @@
+
+[project]
+# PEP 621 project metadata
+# See https://www.python.org/dev/peps/pep-0621/
+name = "pyGRBaglow"
+version = "0.1.3"
+description = "GRB afterglow modelling with standard synchrotronmodel of Granot & Sari 2002"
+keywords = ["GRB", "afterglow", "fireball", "synchrotron", "light curve"]
+readme = "README.md"
+authors = [
+    {name = "David Corre", email = "david.corre.fr@gmail.com"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Scientific/Engineering :: Astronomy",
+]
+dependencies = [
+    "Click>=6.0",
+    "astropy",
+    "cython",
+    "jupyter",
+    "matplotlib",
+    "numpy",
+    "scipy",
+]
+license = {text = "MIT license"}
+requires-python = ">=3.12"
+
+[project.urls]
+Homepage = "https://github.com/dcorre/pyGRBaglow"
+Downloads = "https://github.com/dcorre/pyGRBaglow/archive/v0.1.3.tar.gz"
+
+[project.scripts]
+pyGRBaglow = "pyGRBaglow.cli:main"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"

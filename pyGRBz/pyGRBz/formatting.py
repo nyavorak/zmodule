@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import os
 from pyGRBz.utils import mag2Jy, convAB
 from astropy.table import Table, Column
 from pyGRBz.extinction_correction import correct_MW_ext
@@ -7,7 +8,7 @@ from pyGRBz.io_grb import load_telescope_transmissions
 from pyGRBz.utils import resample
 from scipy.interpolate import interp1d
 
-import imp
+import importlib.util
 
 
 def set_wavelength(data, path):
@@ -181,7 +182,8 @@ def formatting_data(
 ):
     """ """
     try:
-        _, path_dust_map, _ = imp.find_module("pyGRBaglow")
+        spec = importlib.util.find_spec("pyGRBaglow")
+        path_dust_map = os.path.dirname(spec.origin)
     except:
         print("path to pyGRBaglow can not be found.")
 

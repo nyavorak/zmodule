@@ -4,7 +4,7 @@
 import numpy as np
 from scipy.interpolate import interp1d
 from pyGRBz import constants as cc
-import imp
+import importlib.util
 
 
 def resample(x, y, x_new, y_min=None, y_max=None):
@@ -542,7 +542,8 @@ def sed_vega():
     """
     # If code arrived here, it means that the pyGRBz package
     # has already been installed so no need to use try except to check
-    _, path, _ = imp.find_module("pyGRBz")
+    spec = importlib.util.find_spec("pyGRBz")
+    pathgrbz = os.path.dirname(spec.origin)
     VEGA_PATH = path + "/data/bohlin2006_Vega.dat"  # from HST CALSPEC
 
     inFile = open(VEGA_PATH, "r")

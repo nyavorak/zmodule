@@ -9,7 +9,7 @@ from pyGRBz.io_grb import load_observations, load_info_observations
 from pyGRBz.create_SED import extract_seds
 from pyGRBz.fitting import mcmc
 from pyGRBz.plotting import plot_zphot
-import imp
+import importlib.util
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -35,7 +35,8 @@ class GRB_photoZ:
         """
 
         try:
-            _, pathgrbz, _ = imp.find_module("pyGRBz")
+            spec = importlib.util.find_spec("pyGRBz")
+            pathgrbz = os.path.dirname(spec.origin)
             path = os.getcwd()
         except:
             print("path to pyGRBz can not be found.")

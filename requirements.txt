@@ -15,6 +15,7 @@ twine
 pytest
 pytest-runner
 pytest-cov
+importlib
 tox
 xmltodict
 numpy
