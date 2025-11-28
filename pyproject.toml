@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zmodule"
+version = "1.0"
+authors = [
+  { name="Ny Avo Rakotondrainibe", email="nyavo@gmail.com" }
+]
+description = "Zmodule package using pyGRBz and pyGRBaglow"
+dependencies = []
+
+[tool.setuptools]
+packages = ["pyGRBz", "pyGRBaglow"]
+
+[tool.setuptools.package-dir]
+"pyGRBz" = "pyGRBz"
+"pyGRBaglow" = "pyGRBaglow"
