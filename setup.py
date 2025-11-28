@@ -9,7 +9,8 @@ def install_folder(folder):
     """    
     try:
         print(f"Installing dependencies in {folder}...")
-        subprocess.check_call(["pip", "install", "-e", "."], cwd=folder)
+        subprocess.check_call(["pdm", "import", "setup.py"], cwd=folder)
+        subprocess.check_call(["python", "-m", "pip","install","."], cwd=folder)
         print(f"Successfully installed {folder}.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to install {folder}. Error: {e}")
