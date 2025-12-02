@@ -1,0 +1,27 @@
+##Taken from http://arxiv.org/pdf/astro-ph/0509766v2.pdf figure 3
+#name:GRB250314A
+#type:sed
+#RA_J2000:13h25m12.16s
+#DEC_J2000:-05d16m55.1s
+#MW_corrected: no
+#time_since_burst: 59400
+#time_unit: s
+#z:7.00
+#zph:7.00
+#zph_sup:-99
+#zph_inf:-99
+#Av_host:-99
+#Av_host_sup:-99
+#Av_host_inf:-99 
+#ext_type:inconnu
+#beta:-99
+#beta_sup:-99
+#beta_inf:-99
+#beta_X:-99
+#beta_X_sup:-99
+#beta_X_inf:-99
+band flux flux_err zp flux_unit detection telescope
+Y 23.17 0.12 - AB 1 hawk
+J 22.42 0.09 - AB 1 hawk
+H 22.48 0.09 - AB 1 hawk
+z 24.4 0.1 - AB 0 gtc

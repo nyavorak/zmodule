@@ -1,0 +1,27 @@
+#name:GRB251003A
+#type:sed
+#RA_J2000:01h14m06.81s
+#DEC_J2000:+56d29m26.9s
+#MW_corrected: no
+#time_since_burst: 0
+#time_unit: s
+#z:-99
+#zph:-99
+#zph_sup:-99
+#zph_inf:-99
+#Av_host:-99
+#Av_host_sup:-99
+#Av_host_inf:-99 
+#ext_type:inconnu
+#beta:-99
+#beta_sup:-99
+#beta_inf:-99
+#beta_X:-99
+#beta_X_sup:-99
+#beta_X_inf:-99
+band flux flux_err zp flux_unit detection telescope
+g 22.87 0.04 - AB 0 colibri
+r 20.31 0.05 - AB 1 colibri
+i 19.56 0.04 - AB 1 colibri
+z 18.71 0.04 - AB 1 colibri
+y 18.80 0.05 - AB 1 colibri
