@@ -200,10 +200,16 @@ def plot_sed(seds, grb_info, plot, model, output_dir="/results/", filename_suffi
         # plt.xlim(0, sed["eff_wvl"][-1] * 1.5)
         # plt.ylim(min(sed["flux_corr"]) - 3, max(sed["flux_corr"]) + 3)
         # plt.ylim(max(sed['mag'])+3,min(sed['mag'])-3)
-        plt.title(
-            "%s SED extracted at T-To=%.0f sec \n z=%.2f, Av_host=%.2f"
-            % (sed["Name"][0], sed["time_since_burst"][0], z, Av_host)
-        )
+        if z!=-99:
+            plt.title(
+                "%s SED extracted at T-To=%.0f sec"
+                % (sed["Name"][0], sed["time_since_burst"][0])
+            )
+        else:
+            plt.title(
+                "%s SED extracted at T-To=%.0f sec \n z=%.2f, Av_host=%.2f"
+                % (sed["Name"][0], sed["time_since_burst"][0], z, Av_host)
+            )
         plt.grid(True)
         plt.legend(numpoints=1)
         plt.yscale("log")
@@ -440,6 +446,8 @@ def plot_mcmc_fit(
     wvl0 = sed["eff_wvl"][np.argmax(sed["eff_wvl"][mask])]
 
     z_fit = results["zphot_68"][0]
+    z_fit_sup = results["zphot_68_sup"][0]
+    z_fit_inf = results["zphot_68_inf"][0]
     Av_fit = results["Av_68"][0]
     beta_fit = results["beta_68"][0]
     norm_fit = results["norm_68"][0]
@@ -566,19 +574,20 @@ def plot_mcmc_fit(
     plt.ylim(min(sed["flux_corr"]) * 0.1, max(sed["flux_corr"]) * 2.3)
     # plt.ylim(1,400)
     plt.title(
-        "SED extracted at T-To=%.0f sec\n z_sim=%.2f, Av_sim=%.2f"
-        % (float(sed["time_since_burst"][0]), float(z_sim), float(Av_sim))
-    )
+            "SED extracted at T-To=%.0f sec\n z_phot_%s=%.2f+%.2f-%.2f"
+            % (float(sed["time_since_burst"][0]), ext_law,float(z_fit), float(z_fit_sup),float(z_fit_inf))            
+        )    
     plt.yscale("log")
     plt.xscale("log")
     plt.grid(True)
-    name_tel = sed["telescope"][0]
-    if name_tel not in ["ratir", "grond", "gft"]:
-        name_tel = "mix"
+    #name_tel = sed["telescope"][0]
+    #if name_tel not in ["ratir", "grond", "gft"]:
+        #name_tel = "mix"
     plt.legend(
         loc="lower right",
-        numpoints=1,
-        title="%s\n (%s data)" % (sed["Name"][0], name_tel),
+        #numpoints=1,
+        #title="%s\n (%s data)" % (sed["Name"][0], name_tel),
+        title="%s"%(sed["Name"][0]),
         fontsize=16,
     )
     # set the legend title size
@@ -594,8 +603,70 @@ def plot_mcmc_fit(
     )
     if plot:
         
-        plt.show()        
+        plt.show()
     # plt.close("all")
+    
+    #Save a simple txt file
+    # Define the filename based on the extinction law
+    filename = output_dir+str(sed["Name"][0])+"/results_%s.txt" % ext_law    
+    
+    # --- 1. Extract variables (same as before) ---
+    z_fit = results["zphot_68"][0]
+    z_fit_1sup = results["zphot_68_sup"][0]
+    z_fit_1inf = results["zphot_68_inf"][0]
+    z_fit_2sup = results["zphot_95_sup"][0]
+    z_fit_2inf = results["zphot_95_inf"][0]
+    z_fit_3sup = results["zphot_99_sup"][0]
+    z_fit_3inf = results["zphot_99_inf"][0]
+    
+    Av_fit = results["Av_68"][0]
+    Av_fit_1sup = results["Av_68_sup"][0]
+    Av_fit_1inf = results["Av_68_inf"][0]
+    Av_fit_2sup = results["Av_95_sup"][0]
+    Av_fit_2inf = results["Av_95_inf"][0]
+    Av_fit_3sup = results["Av_99_sup"][0]
+    Av_fit_3inf = results["Av_99_inf"][0]
+    
+    beta_fit = results["beta_68"][0]
+    beta_fit_1sup = results["beta_68_sup"][0]
+    beta_fit_1inf = results["beta_68_inf"][0]
+    beta_fit_2sup = results["beta_95_sup"][0]
+    beta_fit_2inf = results["beta_95_inf"][0]
+    beta_fit_3sup = results["beta_99_sup"][0]
+    beta_fit_3inf = results["beta_99_inf"][0]
+    
+    # --- 2. Create the formatted text ---
+    lines = [
+        f"Results for Extinction Law: {ext_law}",
+        "========================================",
+        "",
+        "--- z_phot ---",
+        f"Best fit: {z_fit:.3f}",
+        f"1-sigma:   [-{z_fit_1inf:.3f}, +{z_fit_1sup:.3f}]",
+        f"2-sigma:   [-{z_fit_2inf:.3f}, +{z_fit_2sup:.3f}]",
+        f"3-sigma:   [-{z_fit_3inf:.3f}, +{z_fit_3sup:.3f}]",
+        "",
+        "--- Av ---",
+        f"Best fit: {Av_fit:.3f}",
+        f"1-sigma:   [-{Av_fit_1inf:.3f}, +{Av_fit_1sup:.3f}]",
+        f"2-sigma:   [-{Av_fit_2inf:.3f}, +{Av_fit_2sup:.3f}]",
+        f"3-sigma:   [-{Av_fit_3inf:.3f}, +{Av_fit_3sup:.3f}]",
+        "",
+        "--- beta ---",
+        f"Best fit: {beta_fit:.3f}",
+        f"1-sigma:   [-{beta_fit_1inf:.3f}, +{beta_fit_1sup:.3f}]",
+        f"2-sigma:   [-{beta_fit_2inf:.3f}, +{beta_fit_2sup:.3f}]",
+        f"3-sigma:   [-{beta_fit_3inf:.3f}, +{beta_fit_3sup:.3f}]"
+    ]
+    
+    output_content = "\n".join(lines)
+    
+    # --- 3. Save to file ---
+    with open(filename, "w") as f:
+        f.write(output_content)
+    
+    # --- 4. Print to console ---
+    print(output_content)
 
 
 def plot_zphot(
