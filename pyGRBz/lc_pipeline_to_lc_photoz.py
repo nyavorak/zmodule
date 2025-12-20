@@ -1,15 +1,8 @@
-def alid_to_lc(input_path,output_path,save_file = True):
+def alid_to_lc(input_path,output_path,ra,dec,mw_correction=1,save_file = True):
     """
     Transform ALID LC to readable LC photo-z readable
     """
-    import pandas as pd
-    #"/home/nyavorak/pyGRBz/notebooks/data/lc/ALID_20251111051015_cleaned.csv"
-    
-    #When the path from and for pipeline will be defined
-    #alid or grb_name
-    #input_path = 
-    #output_path = 
-    
+    import pandas as pd    
     df = pd.read_csv(input_path)   
     df.columns = [col.lstrip() for col in df.columns]
     
@@ -39,6 +32,22 @@ def alid_to_lc(input_path,output_path,save_file = True):
             data ['flux_err'][a] = df["magerr"][a]
             data['detection'][a] = 1
     data = data[['time_since_burst', 'band', 'flux', 'flux_err', 'Texp', 'zp', 'flux_unit', 'detection', 'telescope']]
-    
-    if save_file:
-        data.to_csv(output_path,index=False,sep=" ")
+
+
+    if save_file:                    
+        filename = os.path.basename(input_path)
+        obj_name = os.path.splitext(filename)[0]
+            
+            #Open file to write header first, then the CSV data
+        with open(output_path, 'w') as f:
+            f.write(f"#name:{obj_name}\n")
+            f.write(f"#type:lc\n")
+            f.write(f"#RA_J2000:{ra}\n")
+            f.write(f"#DEC_J2000:{dec}\n")
+            f.write(f"#MW_corrected:{mw_correction}\n") #Default is not corrected
+            f.write(f"#time_unit:s\n")
+            f.write(f"#z:-99\n")
+            f.write(f"#Av_host:-99\n")
+            
+            # Write the dataframe content
+            data.to_csv(f, index=False, sep=" ")
