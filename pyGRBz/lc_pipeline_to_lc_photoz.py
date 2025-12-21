@@ -32,8 +32,8 @@ def alid_to_lc(input_path,output_path,ra,dec,mw_correction=1,save_file = True):
         else:
             data['flux'][a] = df["mag"][a]
             data ['flux_err'][a] = df["magerr"][a]
-            data['detection'][a] = 1
-    data = data[['time_since_burst', 'band', 'flux', 'flux_err', 'Texp', 'zp', 'flux_unit', 'detection', 'telescope']]
+            data['detection'][a] = 1    
+    data = data[['time_since_burst', 'band', 'flux', 'flux_err', 'Texp', 'zp', 'flux_unit', 'detection', 'telescope']].sort_values("time_since_burst").reset_index(drop=True)]
 
 
     if save_file:                    
