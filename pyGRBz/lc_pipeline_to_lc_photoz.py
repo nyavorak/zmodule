@@ -4,6 +4,7 @@ def alid_to_lc(input_path,output_path,ra,dec,mw_correction=1,save_file = True):
     """
     import pandas as pd    
     import numpy as np
+    import os
     df = pd.read_csv(input_path)   
     df.columns = [col.lstrip() for col in df.columns]
     
