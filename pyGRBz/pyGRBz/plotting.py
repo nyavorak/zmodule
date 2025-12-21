@@ -574,7 +574,7 @@ def plot_mcmc_fit(
     plt.ylim(min(sed["flux_corr"]) * 0.1, max(sed["flux_corr"]) * 2.3)
     # plt.ylim(1,400)
     plt.title(
-            "SED extracted at T-To=%.0f sec\n z_phot_%s=%.2f+%.2f-%.2f"
+            "SED extracted at T-To=%.0f sec\n z_phot_%s=%.2f+%.2f-%.2f (1-sigma)"
             % (float(sed["time_since_burst"][0]), ext_law,float(z_fit), float(z_fit_sup),float(z_fit_inf))            
         )    
     plt.yscale("log")
@@ -641,19 +641,22 @@ def plot_mcmc_fit(
         "========================================",
         "",
         "--- z_phot ---",
-        f"Best fit: {z_fit:.3f}",
+        f"Best fit: {z_minL:.3f}",        
+        f"Median value (PDF): {z_fit:.3f}",
         f"1-sigma:   [-{z_fit_1inf:.3f}, +{z_fit_1sup:.3f}]",
         f"2-sigma:   [-{z_fit_2inf:.3f}, +{z_fit_2sup:.3f}]",
         f"3-sigma:   [-{z_fit_3inf:.3f}, +{z_fit_3sup:.3f}]",
         "",
         "--- Av ---",
-        f"Best fit: {Av_fit:.3f}",
+        f"Best fit: {Av_minL:.3f}",
+        f"Median value (PDF): {Av_fit:.3f}",
         f"1-sigma:   [-{Av_fit_1inf:.3f}, +{Av_fit_1sup:.3f}]",
         f"2-sigma:   [-{Av_fit_2inf:.3f}, +{Av_fit_2sup:.3f}]",
         f"3-sigma:   [-{Av_fit_3inf:.3f}, +{Av_fit_3sup:.3f}]",
         "",
         "--- beta ---",
-        f"Best fit: {beta_fit:.3f}",
+        f"Best fit: {beta_minL:.3f}",
+        f"Median value (PDF): {beta_fit:.3f}",
         f"1-sigma:   [-{beta_fit_1inf:.3f}, +{beta_fit_1sup:.3f}]",
         f"2-sigma:   [-{beta_fit_2inf:.3f}, +{beta_fit_2sup:.3f}]",
         f"3-sigma:   [-{beta_fit_3inf:.3f}, +{beta_fit_3sup:.3f}]"
