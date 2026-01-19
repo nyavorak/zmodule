@@ -8,12 +8,16 @@ Created on Mon Jul 22 11:21:01 2024
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import imp
-import sys
-from pyGRBz.pyGRBz import GRB_photoZ
-from pyGRBz.estimation import stats
-_, pathgrbz, _ = imp.find_module("pyGRBz")
-path = os.getcwd()
+from astropy.io import ascii
+from astropy.table import Table, vstack
+import pandas as pd
+import importlib.util
+spec = importlib.util.find_spec("pyGRBz")
+if spec and spec.origin:
+    pathgrbz = os.path.dirname(spec.origin)
+    path = os.getcwd()
+else:
+    print("Warning: Could not find module 'pyGRBz'. Using current working directory.")
 
 grb_name = input("GRB name: ").replace(" ", "").upper() #format GRB050904
 grb_name = [grb_name]
@@ -80,7 +84,8 @@ priors=dict(z=[0,11],Av=[0,10],beta=[0,3],norm=[0,10])#NHX if with X-data
 # Select to add dust, gas in host and our Galaxy
 # Select IGM transmission method: 'Madau99' or 'Meiksin06'
 # adapt_z: If adapt_z is True try to reduce parameter space for the redshift based on non detection in blue bands
-laws = ['smc', 'lmc', 'mw', 'nodust','sne']
+laws = ['smc','nodust']
+#laws = ['smc', 'lmc', 'mw', 'nodust','sne']
 for law in laws:
     photoz.fit(
         ext_law=law,
@@ -89,8 +94,8 @@ for law in laws:
 #        Nsteps1=500,
 #        Nsteps2=1000,
         Nsteps1=0,
-        Nsteps2=500,
-        nburn=100,
+        Nsteps2=1000,
+        nburn=300,
 #        nburn=300,
         Host_dust=True,
         Host_gas=False,
