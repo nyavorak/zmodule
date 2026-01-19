@@ -13,6 +13,7 @@ from astropy.table import Table, vstack
 import pandas as pd
 import importlib.util
 spec = importlib.util.find_spec("pyGRBz")
+from pyGRBz.estimation import stats
 if spec and spec.origin:
     pathgrbz = os.path.dirname(spec.origin)
     path = os.getcwd()
