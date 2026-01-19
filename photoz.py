@@ -18,6 +18,7 @@ if spec and spec.origin:
     path = os.getcwd()
 else:
     print("Warning: Could not find module 'pyGRBz'. Using current working directory.")
+from pyGRBz.pyGRBz import GRB_photoZ    
 
 grb_name = input("GRB name: ").replace(" ", "").upper() #format GRB050904
 grb_name = [grb_name]
@@ -27,14 +28,14 @@ mode = input("SED or LC? ").lower() # Can estimate photo_z for: "MutlipleTargets
 
 # input data and output
 if mode=="sed":
-    input_dir='/data/sed/'
+    input_dir='/zmodule/data/sed/'
 elif mode=="lc":
-    input_dir='/data/lc/'
+    input_dir='/zmodule/data/lc/'
 else:
     sys.exit("Wrong input")
 
 #output_dir=path+'/results/%s/'%mode
-output_dir='/results/%s/'%mode
+output_dir='/zmodule/results/%s/'%mode
 
 
 # Load module
@@ -105,7 +106,7 @@ for law in laws:
         adapt_z=True)
 
 #output_dir=path+'/results/%s/'%mode
-output_dir='/results/%s/'%mode
+output_dir='/zmodule/results/%s/'%mode
 ###############################################################################################################    
 #Compare all fits statistically, in term of chi-square and BIC
 user_input = input("Do you want to statistically compare the results of your different fits? (yes/no)").replace(" ", "").lower()
